@@ -20,7 +20,7 @@ const Role = db.role;
 // Create a Server
 const server = app.listen(8080, function () {
 
-	const host = server.address().address
+	const host = server.address("localhost").address
 	const port = server.address().port
 
   console.log("App listening at http://%s:%s", host, port)

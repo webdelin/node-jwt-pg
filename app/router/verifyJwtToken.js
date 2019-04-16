@@ -28,7 +28,9 @@ verifyToken = (req, res, next) => {
 isAdmin = (req, res, next) => {
 	let token = req.headers['x-access-token'];
 
-	User.findById(req.userId)
+	User.findOne({
+		where: {id: req.userId}
+	})
 		.then(user => {
 			user.getRoles().then(roles => {
 				for (let i = 0; i < roles.length; i++) {
@@ -48,7 +50,9 @@ isAdmin = (req, res, next) => {
 isPmOrAdmin = (req, res, next) => {
 	let token = req.headers['x-access-token'];
 
-	User.findById(req.userId)
+	User.findOne({
+		where: {id: req.userId}
+	})
 		.then(user => {
 			user.getRoles().then(roles => {
 				for (let i = 0; i < roles.length; i++) {
