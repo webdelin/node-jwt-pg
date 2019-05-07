@@ -1,18 +1,38 @@
 module.exports = (sequelize, Sequelize) => {
-	const User = sequelize.define('users', {
-	  name: {
-		  type: Sequelize.STRING
-	  },
-	  username: {
-		  type: Sequelize.STRING
-	  },
-	  email: {
-		  type: Sequelize.STRING
-	  },
-	  password: {
-		  type: Sequelize.STRING
-	  }
-	});
-	
-	return User;
+const User = db.define('users',
+    {
+        id: {
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
+            primaryKey: true,
+            unique:true,
+            allowNull: false
+        },
+        email: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            unique: true,
+            validate: {
+                isEmail: true,
+                notEmpty: true
+            }
+        },
+        password: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        }
+    },
+    {
+        schema: 'public'
+    }
+)
+User.sync({
+    force: true
+});
+module.exports = {
+    db,
+    User
 }
